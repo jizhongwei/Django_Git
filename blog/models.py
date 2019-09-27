@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.utils.html import strip_tags
 
 class Tag(models.Model):
     name = models.CharField(max_length= 100)
@@ -29,6 +30,7 @@ class Blog(models.Model):
     excerpt = models.CharField(max_length= 200, blank= True)
     author = models.ForeignKey(User, on_delete= models.CASCADE)
     status = models.CharField(max_length= 1, choices= CHOICES)
+    views = models.PositiveIntegerField(default= 0)
 
     class Meta:
         ordering = ('-created_time',)
@@ -38,8 +40,12 @@ class Blog(models.Model):
 
     def save(self, *args,**kwargs):
         if not self.excerpt:
-            self.excerpt = self.body[:50]
+            self.excerpt = strip_tags(self.body)[:50]
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('blog:detail', args= (self.pk,))
+        return reverse('blog:detail', kwargs= {'pk': self.pk})
+
+    def increase_views(self):
+        self.views += 1
+        super(Blog, self).save(update_fields= ['views'])
