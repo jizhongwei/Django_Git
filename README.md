@@ -23,3 +23,33 @@ urlpatterns = [
     path('', views.index, name = 'index'),
     ]
 ```
+
+### Django 模型
+> Django中的模型对应就是数据库，使用Django的一大优势就是不用直接或者说几乎不用跟数据库打交道，我们完全可以通过编写models.py文件来定义相关的数据库表，创建数据库表都是通过Django提供的命令来完成。跟数据库的交互也是通过Django封装的数据库API。
+
+比如定义模型类
+```
+from django.db import models
+from django.contrib.auth.models import User
+
+class Blog(models.Model):
+    title = models.CharField(max_length = 100)
+    body = models.TextField()
+    created_time = models.DateTimeField(auto_now_add = True)
+    updated_time = models.DateTimeField(auto_now = True)
+    
+    author = models.ForeignKey(User, on_delete = models.CASCADE)
+    
+    def __str__(self):
+        return self.title
+        
+    class Meta:
+        ordering = ('-created_time',)
+```
+> 上面是自定义的一个模型类，里面涉及到很多的知识点
+>
+> 1、每一个模型类对应到数据库中是一个数据表<br/>
+> 2、每一个模型类都要继承models.Model父类<br/>
+> 3、模型类中的每一个字段都对应数据表中的一个字段，并且不用的类型体现到数据表中字段的不同类型<br/>
+4、字段可以接收不同的参数来控制字段，比如max_length来控制该字段最多只能存储的字符数<br/>
+5、ForeignKey表示一对多的关系，意思就是一篇博客只能有一个作者，但是一个作者可以有多篇博客<br/>
