@@ -2,7 +2,7 @@ from django import template
 from django.db.models import Q
 
 from ..models import *
-
+import markdown
 
 register = template.Library()
 
@@ -25,3 +25,10 @@ def archives():
 @register.simple_tag
 def get_tags():
     return Tag.objects.all()
+
+@register.filter(name= 'markdown')
+def make_markdown(blog):
+    return markdown.markdown(blog.body, extensions = [
+        'markdown.extensions.extra',
+        'markdown.extensions.codehilite',
+    ])

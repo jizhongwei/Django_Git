@@ -11,11 +11,11 @@ def index(request):
 
 def detail(request, pk):
     post = get_object_or_404(Blog, pk = pk)
-    post.body = markdown.markdown(post.body,
-                                  extensions = [
-                                      'markdown.extensions.extra',
-                                      'markdown.extensions.codehilite',
-                                  ])
+    # post.body = markdown.markdown(post.body,
+    #                               extensions = [
+    #                                   'markdown.extensions.extra',
+    #                                   'markdown.extensions.codehilite',
+    #                               ])
     return render(request, 'blog/detail.html', locals())
 
 def category(request, pk):

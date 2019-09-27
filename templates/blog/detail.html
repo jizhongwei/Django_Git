@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load blog_tags %}
 
 {% block main %}
     <article class="post post-1">
@@ -28,7 +29,7 @@
         </header>
         <div class="entry-content clearfix">
             <p class="body">
-                {{ post.body | safe }}
+                {{ post | markdown | safe }}
             </p>
         </div>
     </article>
