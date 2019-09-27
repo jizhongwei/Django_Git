@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.urls import reverse
 
 class Tag(models.Model):
     name = models.CharField(max_length= 100)
@@ -40,3 +40,6 @@ class Blog(models.Model):
         if not self.excerpt:
             self.excerpt = self.body[:50]
         super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('blog:detail', args= (self.pk,))
