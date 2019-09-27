@@ -26,7 +26,7 @@ class Blog(models.Model):
     updated_time = models.DateTimeField(auto_now = True)
     category = models.ForeignKey(Category, on_delete= models.CASCADE)
     tags = models.ManyToManyField(Tag)
-    excerpt = models.CharField(max_length= 200)
+    excerpt = models.CharField(max_length= 200, blank= True)
     author = models.ForeignKey(User, on_delete= models.CASCADE)
     status = models.CharField(max_length= 1, choices= CHOICES)
 
@@ -35,3 +35,8 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args,**kwargs):
+        if not self.excerpt:
+            self.excerpt = self.body[:50]
+        super().save(*args, **kwargs)
