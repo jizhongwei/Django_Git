@@ -39,3 +39,6 @@ def archives(request, year, month):
     post_list = Blog.objects.filter(created_time__year= year,
                                     created_time__month= month)
     return render(request, 'blog/index.html', locals())
+
+def about(request):
+    pass
