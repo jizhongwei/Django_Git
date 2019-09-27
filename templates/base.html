@@ -93,57 +93,125 @@
             </main>
             <aside class="col-md-4">
                 {% block toc %}
-                
+
                 {% endblock %}
-                <div class="widget widget-recent-posts">
-                    <h3 class="widget-title">最近发表文章</h3>
-                    {% get_recent_posts as recent_post_list %}
-                    <ul>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="widget-title">最近发表文章</h3>
+                    </div>
+                    <div class="panel-body">
+                        {% get_recent_posts as recent_post_list %}
+                    <ul class="list-group">
+
                         {% for post in recent_post_list %}
-                            <li>
+                            <li class="list-group-item">
                                 <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
                             </li>
                         {% endfor %}
-
                     </ul>
-                </div>
-                <div class="widget widget-archives">
-                    <h3 class="widget-title">归档</h3>
-                    {% archives as date_list %}
-                    <ul>
-                        {% for date in date_list %}
-                            <li>
-                                <a href="{% url 'blog:archives' date.year date.month %}">{{ date.year }} 年 {{ date.month }} 月</a>
-                            </li>
-                        {% endfor %}
-
-                    </ul>
+                    </div>
                 </div>
 
-                <div class="widget widget-category">
-                    <h3 class="widget-title">分类</h3>
-                    {% get_categories as category_list %}
-                    <ul>
-                        {% for category in category_list %}
-                            <li>
-                                <a href="{% url 'blog:category' category.pk %}">{{ category.name }} <span class="post-count">({{ category.blog_set.count }})</span></a>
-                            </li>
-                        {% endfor %}
+{#                <div class="widget widget-recent-posts">#}
+{#                    <h3 class="widget-title">最近发表文章</h3>#}
+{#                    {% get_recent_posts as recent_post_list %}#}
+{#                    <ul>#}
+{#                        #}
+{#                        {% for post in recent_post_list %}#}
+{#                            <li>#}
+{#                                <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>#}
+{#                            </li>#}
+{#                        {% endfor %}#}
+{#                    </ul>#}
+{#                </div>#}
 
-                    </ul>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="widget-title">归档</h3>
+                    </div>
+                    <div class="panel-body">
+                        {% archives as date_list %}
+                            <ul class="list-group">
+                                {% for date in date_list %}
+                                    <li class="list-group-item">
+                                        <a href="{% url 'blog:archives' date.year date.month %}">{{ date.year }} 年 {{ date.month }} 月</a>
+                                    </li>
+                                {% endfor %}
+
+                            </ul>
+                    </div>
+                </div>
+{#                <div class="widget widget-archives">#}
+{#                    <h3 class="widget-title">归档</h3>#}
+{#                    {% archives as date_list %}#}
+{#                    <ul>#}
+{#                        {% for date in date_list %}#}
+{#                            <li>#}
+{#                                <a href="{% url 'blog:archives' date.year date.month %}">{{ date.year }} 年 {{ date.month }} 月</a>#}
+{#                            </li>#}
+{#                        {% endfor %}#}
+{##}
+{#                    </ul>#}
+{#                </div>#}
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="widget-title">分类</h3>
+                    </div>
+                    <div class="panel-body">
+                        {% get_categories as category_list %}
+                        <ul class="list-group">
+                            {% for category in category_list %}
+                                <li class="list-group-item">
+                                    <a href="{% url 'blog:category' category.pk %}">{{ category.name }} <span class="post-count">({{ category.blog_set.count }})</span></a>
+                                </li>
+                            {% endfor %}
+
+                        </ul>
+                    </div>
                 </div>
 
-                <div class="widget widget-tag-cloud">
-                    <h3 class="widget-title">标签云</h3>
-                    {% get_tags as tags %}
-                    <ul>
-                        {% for tag in tags %}
-                            <li>
-                                <a href="{% url 'blog:tag' tag.pk %}">{{ tag.name }}({{ tag.blog_set.count }})</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
+{#                <div class="widget widget-category">#}
+{#                    <h3 class="widget-title">分类</h3>#}
+{#                    {% get_categories as category_list %}#}
+{#                    <ul>#}
+{#                        {% for category in category_list %}#}
+{#                            <li>#}
+{#                                <a href="{% url 'blog:category' category.pk %}">{{ category.name }} <span class="post-count">({{ category.blog_set.count }})</span></a>#}
+{#                            </li>#}
+{#                        {% endfor %}#}
+{##}
+{#                    </ul>#}
+{#                </div>#}
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="widget-title">标签云</h3>
+                    </div>
+                    <div class="panel-body">
+                        {% get_tags as tags %}
+                        <ul class="list-group">
+                            {% for tag in tags %}
+                                <li class="list-group-item">
+                                    <a href="{% url 'blog:tag' tag.pk %}">{{ tag.name }}({{ tag.blog_set.count }})</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
+
+{#                <div class="widget widget-tag-cloud">#}
+{#                    <h3 class="widget-title">标签云</h3>#}
+{#                    {% get_tags as tags %}#}
+{#                    <ul>#}
+{#                        {% for tag in tags %}#}
+{#                            <li>#}
+{#                                <a href="{% url 'blog:tag' tag.pk %}">{{ tag.name }}({{ tag.blog_set.count }})</a>#}
+{#                            </li>#}
+{#                        {% endfor %}#}
+{#                    </ul>#}
+{#                </div>#}
 {#                <div class="rss">#}
 {#                    <a href=""><span class="ion-social-rss-outline"></span> RSS 订阅</a>#}
 {#                </div>#}
