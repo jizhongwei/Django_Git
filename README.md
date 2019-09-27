@@ -5,9 +5,21 @@
 > Django的视图是一个个函数，也可以是一个个类，但类需要面向对象的知识，初学阶段我们一般都是先学习函数的形式，这样入门的门槛低，也能为后面的视图类学习打下基础
 比如：
 
+views.py
 ```python
 from django.http import HttpResponse
 
 def index(request):
   return HttpResponse("<h2>Welcome to my blog index page!</h2>")
+```
+
+urls.py
+```
+from django.urls import path
+
+from . import views
+
+urlpatterns = [
+    path('', views.index, name = 'index'),
+    ]
 ```
