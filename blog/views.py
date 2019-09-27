@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
+from django.db.models import Q
 
 from .models import *
 import markdown
@@ -11,6 +12,7 @@ def index(request):
 
 def detail(request, pk):
     post = get_object_or_404(Blog, pk = pk)
+    post.increase_views()
     # post.body = markdown.markdown(post.body,
     #                               extensions = [
     #                                   'markdown.extensions.extra',
@@ -24,10 +26,14 @@ def category(request, pk):
     return render(request, 'blog/index.html' ,locals())
 
 def tag(request,pk):
-    pass
+    tag = get_object_or_404(Tag, pk = pk)
+    post_list = Blog.objects.filter(tags= tag)
+    return render(request, 'blog/index.html', locals())
 
 def search(request):
-    pass
+    q = request.GET.get('q')
+    post_list = Blog.objects.filter(Q(title__icontains= q) | Q(body__icontains= q))
+    return render(request, 'blog/index.html', locals())
 
 def archives(request, year, month):
     post_list = Blog.objects.filter(created_time__year= year,
