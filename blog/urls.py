@@ -1,3 +1,8 @@
-# -*- coding: utf-8 -*-
-__author__ = 'Dick'
-__time__ = '2019-09-27 10:43'
+from django.urls import path
+
+from . import views
+
+app_name = 'blog'
+urlpatterns = [
+    path('', views.index, name= 'index'),
+]
