@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ block.super }}--About Me
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/aboutme.css' %}">
+{% endblock %}
+
+{% block main %}
+    <div class="aboutme-parent">
+        <div class="aboutme-content">
+            Hello, 欢迎造访本人小站，首先这是本人的网站空间，我会在上面发表一些文章,<br>
+            希望能跟大家一起交流，一起进步。。。
+        </div>
+    </div>
+{% endblock %}
